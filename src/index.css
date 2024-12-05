@@ -22,10 +22,6 @@ body {
 }
 
 @layer base {
-    :root {
-        /* --foreground-text: red; */
-    }
-
     body {
         @apply bg-background text-foreground;
     }
