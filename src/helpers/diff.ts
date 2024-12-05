@@ -98,10 +98,18 @@ const createSectionContentDiff = (
     prevContent: string[],
     nextContent: string[]
 ) => {
-    const diff = prevContent.map((value, index) => {
-        const yLine = nextContent[index];
-        return createLineContentDiff(value, yLine);
-    });
+    const maxLinesCount = Math.max(prevContent.length, nextContent.length);
+    let i = 0;
+    const diff = [];
+
+    while (i < maxLinesCount) {
+        const prevLine = prevContent[i] ?? "";
+        const nextLine = nextContent[i] ?? "";
+        const lineDiff = createLineContentDiff(prevLine, nextLine);
+
+        diff.push(lineDiff);
+        i++;
+    }
 
     return diff;
 };
