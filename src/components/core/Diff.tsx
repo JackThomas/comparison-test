@@ -1,3 +1,4 @@
+import { Fragment } from "react/jsx-runtime";
 import { diff } from "../../helpers/diff";
 import { Section } from "./Section";
 import { SectionContent } from "./SectionContent";
@@ -10,23 +11,19 @@ interface DiffProps {
 
 const Diff = ({ prevString, nextString }: DiffProps) => {
     const sections = diff(prevString, nextString);
-
-    return sections.map((section) => {
-        if (section.siblings && section.siblings > 1) {
-            return <SectionSibling siblings={section.siblings} />;
-        }
-        return (
-            <Section
-                key={section.header}
-                type={section.type}
-                header={section.header}
-            >
-                <SectionContent
-                    content={section.contentDiff ?? section.content}
-                />
-            </Section>
-        );
-    });
+    return sections.map((section) => (
+        <Fragment key={section.header}>
+            {section.siblings && section.siblings > 1 ? (
+                <SectionSibling siblings={section.siblings} />
+            ) : (
+                <Section type={section.type} header={section.header}>
+                    <SectionContent
+                        content={section.contentDiff ?? section.content}
+                    />
+                </Section>
+            )}
+        </Fragment>
+    ));
 };
 
 export { Diff };

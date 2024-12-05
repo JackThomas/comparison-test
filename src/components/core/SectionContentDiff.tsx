@@ -1,3 +1,4 @@
+import { Fragment } from "react/jsx-runtime";
 import { DiffType } from "../../enum/DiffType.enum";
 
 interface SectionContentDiffProps {
@@ -11,15 +12,14 @@ const SectionContentDiff = ({ line }: SectionContentDiffProps) => {
         unchanged: "text-unchanged",
         changed: "text-changed",
     };
+
     return (
         <p>
             {line.map(({ text, type }, index) => (
-                <>
-                    <span key={`${text}-${type}`} className={classNames[type]}>
-                        {text}
-                    </span>
+                <Fragment key={`${text}-${type}-${index}`}>
+                    <span className={classNames[type]}>{text}</span>
                     {index === line.length - 1 ? "" : " "}
-                </>
+                </Fragment>
             ))}
         </p>
     );
